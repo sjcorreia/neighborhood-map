@@ -40,7 +40,7 @@ var locations = [{
       lng: -71.097218
     },
     place_id: 'ChIJbz8lP_Z544kRBFV6ZMsNgKI',
-    keyword: 'Boston Red Sox'
+    keyword: 'Fenway Park'
   },
   {
     title: 'Bull & Finch Pub',
@@ -68,6 +68,33 @@ var locations = [{
     },
     place_id: 'ChIJOU-Kd_Rw44kRpQxHRXAFwqU',
     keyword: 'USS Constitution'
+  },
+  {
+    title: 'Tasty Burger',
+    location: {
+      lat: 42.344762,
+      lng: -71.098375
+    },
+    place_id: 'ChIJG_7Z4_V544kRalvwsGSoZaI',
+    keyword: 'Pulp Fiction'
+  },
+  {
+    title: 'Museum of Fine Arts',
+    location: {
+      lat: 42.339381,
+      lng: -71.094048
+    },
+    place_id: 'ChIJS3rn5w1644kRZNWVxNY_Ay8',
+    keyword: 'Museum of Fine Arts, Boston'
+  },
+  {
+    title: 'TD Garden',
+    location: {
+      lat: 42.36631,
+      lng: -71.062226
+    },
+    place_id: 'ChIJM3Ri5pFw44kRksKsxCGcqWY',
+    keyword: 'TD Garden'
   },
   {
     title: 'Old State House',
@@ -167,24 +194,26 @@ function initMap() {
       infowindow.open(map, marker);
       document.getElementById('marker-title').textContent = marker.title;
       // Add a link to wikipedia via ajax call
-      var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.wiki_keyword + '&format=json&callback=wikiCallback';
+      var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + 
+        marker.wiki_keyword + '&format=json&callback=wikiCallback';
       var wikiRequestTimeout = setTimeout(function () {
         document.getElementById('wiki-link').textContent = "Failed To Get Wikipedia Response";
       }, 8000);
 
       $.ajax({
-        url: wikiUrl,
-        dataType: "jsonp",
-        jsonp: "callback",
-        success: function (response) {
+          url: wikiUrl,
+          dataType: "jsonp",
+          jsonp: "callback",
+          success: function (response) {
 
-          articleStr = response[1][0];
-          var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-          document.getElementById('wiki-link').innerHTML = 'Wikipedia: <a href="' + url + '" target="_blank">' + articleStr + '</a>';
+            articleStr = response[1][0];
+            var url = 'http://en.wikipedia.org/wiki/' + articleStr;
+            document.getElementById('wiki-link').innerHTML = 'Wikipedia: <a href="' + url +
+              '" target="_blank">' + articleStr + '</a>';
 
-          clearTimeout(wikiRequestTimeout);
-        }
-      })
+            clearTimeout(wikiRequestTimeout);
+          }
+        })
         .fail(function () {
           document.getElementById('wiki-link').innerHTML = 'Wikipedia Article Not Found';
         });
@@ -195,6 +224,7 @@ function initMap() {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
+  // an async function 
   async function toggleBounce(marker) {
     if (marker.getAnimation() !== null) {
       marker.setAnimation(null);
@@ -206,3 +236,9 @@ function initMap() {
   }
 
 }
+
+var ViewModel = function() {
+
+}
+
+ko.applyBindings(new ViewModel());
