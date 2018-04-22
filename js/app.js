@@ -13,7 +13,8 @@ var locations = [{
       lng: -71.0537
     },
     place_id: 'ChIJtT5ZHIlw44kRzCtDBAjPP3A',
-    keyword: 'Paul Revere'
+    keyword: 'Paul Revere',
+    category: 'History'
   },
   {
     title: 'Faneuil Hall Marketplace',
@@ -22,7 +23,8 @@ var locations = [{
       lng: -71.054772
     },
     place_id: 'ChIJpyiwa4Zw44kRBQSGWKv4wgA',
-    keyword: 'Faneuil Hall'
+    keyword: 'Faneuil Hall',
+    category: 'History'
   },
   {
     title: 'Site of the Boston Tea Party',
@@ -31,7 +33,8 @@ var locations = [{
       lng: -71.05128
     },
     place_id: 'ChIJ4bwEPIBw44kRs7STmn977tE',
-    keyword: 'Boston Tea Party'
+    keyword: 'Boston Tea Party',
+    category: 'History'
   },
   {
     title: 'Fenway Park',
@@ -40,7 +43,8 @@ var locations = [{
       lng: -71.097218
     },
     place_id: 'ChIJbz8lP_Z544kRBFV6ZMsNgKI',
-    keyword: 'Fenway Park'
+    keyword: 'Fenway Park',
+    category: 'Sports'
   },
   {
     title: 'Bull & Finch Pub',
@@ -49,7 +53,8 @@ var locations = [{
       lng: -71.071278
     },
     place_id: 'ChIJB939tp9w44kRQuO7SeU0ML4',
-    keyword: 'Cheers'
+    keyword: 'Cheers',
+    category: 'Food & Drink'
   },
   {
     title: 'Boston Symphony Hall',
@@ -58,7 +63,8 @@ var locations = [{
       lng: -71.08573
     },
     place_id: 'ChIJCV1qVRd644kRkF8_glHk7wo',
-    keyword: 'Boston Pops Orchestra'
+    keyword: 'Boston Pops Orchestra',
+    category: 'Music & Arts'
   },
   {
     title: 'USS Constitution Museum',
@@ -67,7 +73,8 @@ var locations = [{
       lng: -71.055424
     },
     place_id: 'ChIJOU-Kd_Rw44kRpQxHRXAFwqU',
-    keyword: 'USS Constitution'
+    keyword: 'USS Constitution',
+    category: 'History'
   },
   {
     title: 'Tasty Burger',
@@ -76,7 +83,8 @@ var locations = [{
       lng: -71.098375
     },
     place_id: 'ChIJG_7Z4_V544kRalvwsGSoZaI',
-    keyword: 'Pulp Fiction'
+    keyword: 'Pulp Fiction',
+    category: 'Food & Drink'
   },
   {
     title: 'Museum of Fine Arts',
@@ -85,7 +93,8 @@ var locations = [{
       lng: -71.094048
     },
     place_id: 'ChIJS3rn5w1644kRZNWVxNY_Ay8',
-    keyword: 'Museum of Fine Arts, Boston'
+    keyword: 'Museum of Fine Arts, Boston',
+    category: 'Music & Arts'
   },
   {
     title: 'TD Garden',
@@ -94,7 +103,8 @@ var locations = [{
       lng: -71.062226
     },
     place_id: 'ChIJM3Ri5pFw44kRksKsxCGcqWY',
-    keyword: 'TD Garden'
+    keyword: 'TD Garden',
+    category: 'Sports'
   },
   {
     title: 'Old State House',
@@ -103,7 +113,8 @@ var locations = [{
       lng: -71.057454
     },
     place_id: 'ChIJ2XkgRoRw44kRvYSoqILW2Og',
-    keyword: 'Boston Massacre'
+    keyword: 'Boston Massacre',
+    category: 'History'
   }
 ];
 
@@ -230,15 +241,34 @@ function initMap() {
       marker.setAnimation(null);
     } else {
       marker.setAnimation(google.maps.Animation.BOUNCE);
-      await sleep(3600);
+      await sleep(3500);
       marker.setAnimation(null);
     }
   }
 
 }
 
+var Location = function(data) {
+  this.title = ko.observable(data.title);
+  this.location = ko.observable(data.location);
+  this.place_id = ko.observable(data.place_id);
+  this.keyword = ko.observable(data.keyword);
+  this.category = ko.observable(data.category);
+}
+
 var ViewModel = function() {
+  var self = this;
+
+  this.locationsList = ko.observableArray([]);
+  locations.forEach(function (locationItem) {
+    self.locationsList.push(new Location(locationItem));
+  });
 
 }
 
 ko.applyBindings(new ViewModel());
+// $(document).ready(function () {
+//   ViewModel();
+//   initMap();
+//   ko.applyBindings(new ViewModel());
+// });
