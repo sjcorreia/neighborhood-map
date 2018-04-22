@@ -30,7 +30,15 @@ h3 {
     /* text-align: center; */
 }
 
+hr {
+    background: #A04405;
+    height: 1px;
+    margin: 20px 0 20px 0;
+    border: none;
+}
+
 #map {
+    top: 0px;
     bottom: 0px;
     height: 100%;
     left: 362px;
@@ -63,9 +71,9 @@ h3 {
 }
 
 #filter-search-text {
-    width: 70%;
+    width: 50%;
 }
 
 #filter-search {
-    width: 24%;
+    width: 44%;
 }
