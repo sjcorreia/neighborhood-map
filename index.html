@@ -14,13 +14,14 @@
     <div class="container">
         <div class="options-box">
             <h1>Discover Boston</h1>
+            <hr>
             <div>
-                <input id="filter-search-text"></input>
+                <span id="filter-search-text">Filter By Category:</span>
                 <select id="filter-search"></select>
             </div>
-            <ul style="list-style-type:none">
+            <ul data-bind="foreach: locationsList" style="list-style-type:none">
                 <li>
-                    <button></button>
+                    <span data-bind="text: title"></span>
                 </li>
             </ul>
             <div></div>
