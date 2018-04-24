@@ -122,11 +122,11 @@ var locations = [{
 function initMap() {
   // use a constructor to create a new map JS object. You can use the coordinates
   // 42.354954,-71.065489 Boston Common, Boston, MA, USA
+  var bostonLat = 42.354954;
+  var bostonLng = -71.065489;
+  var mapCenter = new google.maps.LatLng(bostonLat, bostonLng);  
   map = new google.maps.Map(document.getElementById('map'), {
-    center: {
-      lat: 42.354954,
-      lng: -71.065489
-    },
+    center: mapCenter,
     zoom: 14
   });
 
@@ -139,6 +139,7 @@ function initMap() {
     var position = locations[i].location;
     var title = locations[i].title;
     var keyword = locations[i].keyword;
+    var category = locations[i].category;
     // Create a marker per location, and put into markers array.
     var marker = new google.maps.Marker({
       map: map,
@@ -146,7 +147,8 @@ function initMap() {
       title: title,
       animation: google.maps.Animation.DROP,
       id: i,
-      wiki_keyword: keyword
+      wiki_keyword: keyword,
+      category: category
     });
     // Push the marker to our array of markers.
     markers.push(marker);
@@ -156,96 +158,99 @@ function initMap() {
       toggleBounce(this);
     });
     bounds.extend(markers[i].position);
-
   }
 
-  // This function populates the infowindow when the marker is clicked. We'll only allow
-  // one infowindow which will open at the marker that is clicked, and populate based
-  // on that markers position.
-  function populateInfoWindow(marker, infowindow) {
-    // Check to make sure the infowindow is not already opened on this marker.
-    if (infowindow.marker != marker) {
-      // Clear the infowindow content to give the streetview time to load.
-      infowindow.marker = marker;
-      // Make sure the marker property is cleared if the infowindow is closed.
-      infowindow.addListener('closeclick', function () {
-        infowindow.marker = null;
-      });
-      infowindow.setContent('<div id="marker-title"></div></br><div id="pano"></div></br><div id="wiki-link"></div>');
-      var streetViewService = new google.maps.StreetViewService();
-      var radius = 50;
-      // In case the status is OK, which means the pano was found, compute the
-      // position of the streetview image, then calculate the heading, then get a
-      // panorama from that and set the options
-      function getStreetView(data, status) {
-        if (status == google.maps.StreetViewStatus.OK) {
-          var nearStreetViewLocation = data.location.latLng;
-          var heading = google.maps.geometry.spherical.computeHeading(
-            nearStreetViewLocation, marker.position);
-          // infowindow.setContent('<div>' + marker.title + '</div></br><div id="pano"></div>');
-          var panoramaOptions = {
-            position: nearStreetViewLocation,
-            pov: {
-              heading: heading,
-              pitch: 10
-            }
-          };
-          var panorama = new google.maps.StreetViewPanorama(
-            document.getElementById('pano'), panoramaOptions);
-        } else {
-          panoElem.text("No Street View Fount")
-          // infowindow.setContent('<div>' + marker.title + '</div>' +
-          //   '<div>No Street View Found</div>');
-        }
-      }
-      // Use streetview service to get the closest streetview image within
-      // 50 meters of the markers position
-      streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
-      // Open the infowindow on the correct marker.
-      infowindow.open(map, marker);
-      document.getElementById('marker-title').textContent = marker.title;
-      // Add a link to wikipedia via ajax call
-      var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + 
-        marker.wiki_keyword + '&format=json&callback=wikiCallback';
-      var wikiRequestTimeout = setTimeout(function () {
-        document.getElementById('wiki-link').textContent = "Failed To Get Wikipedia Response";
-      }, 8000);
+  google.maps.event.addDomListener(window, 'resize', function () {
+    map.setCenter(mapCenter);
+  });
 
-      $.ajax({
-          url: wikiUrl,
-          dataType: "jsonp",
-          jsonp: "callback",
-          success: function (response) {
+}
 
-            articleStr = response[1][0];
-            var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-            document.getElementById('wiki-link').innerHTML = 'Wikipedia: <a href="' + url +
-              '" target="_blank">' + articleStr + '</a>';
-
-            clearTimeout(wikiRequestTimeout);
+// This function populates the infowindow when the marker is clicked. We'll only allow
+// one infowindow which will open at the marker that is clicked, and populate based
+// on that markers position.
+async function populateInfoWindow(marker, infowindow) {
+  // Check to make sure the infowindow is not already opened on this marker.
+  if (infowindow.marker != marker) {
+    // Clear the infowindow content to give the streetview time to load.
+    infowindow.marker = marker;
+    // Make sure the marker property is cleared if the infowindow is closed.
+    infowindow.addListener('closeclick', function () {
+      infowindow.marker = null;
+    });
+    infowindow.setContent('<div id="marker-title"></div></br><div id="pano"></div></br><div id="wiki-link"></div>');
+    var streetViewService = new google.maps.StreetViewService();
+    var radius = 50;
+    // In case the status is OK, which means the pano was found, compute the
+    // position of the streetview image, then calculate the heading, then get a
+    // panorama from that and set the options
+    function getStreetView(data, status) {
+      if (status == google.maps.StreetViewStatus.OK) {
+        var nearStreetViewLocation = data.location.latLng;
+        var heading = google.maps.geometry.spherical.computeHeading(
+          nearStreetViewLocation, marker.position);
+        var panoramaOptions = {
+          position: nearStreetViewLocation,
+          pov: {
+            heading: heading,
+            pitch: 10
           }
-        })
-        .fail(function () {
-          document.getElementById('wiki-link').innerHTML = 'Wikipedia Article Not Found';
-        });
+        };
+        var panorama = new google.maps.StreetViewPanorama(
+          document.getElementById('pano'), panoramaOptions);
+      } else {
+        panoElem.text("No Street View Fount")
+      }
     }
-  }
+    // Use streetview service to get the closest streetview image within
+    // 50 meters of the markers position
+    streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
+    // Open the infowindow on the correct marker.
+    infowindow.open(map, marker);
+    map.setCenter(marker.position);
+    document.getElementById('marker-title').textContent = marker.title;
+    // Add a link to wikipedia via ajax call
+    var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' +
+      marker.wiki_keyword + '&format=json&callback=wikiCallback';
+    var wikiRequestTimeout = setTimeout(function () {
+      document.getElementById('wiki-link').textContent = "Failed To Get Wikipedia Response";
+    }, 8000);
 
-  function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
+    $.ajax({
+      url: wikiUrl,
+      dataType: "jsonp",
+      jsonp: "callback",
+      success: function (response) {
 
-  // an async function 
-  async function toggleBounce(marker) {
-    if (marker.getAnimation() !== null) {
-      marker.setAnimation(null);
-    } else {
-      marker.setAnimation(google.maps.Animation.BOUNCE);
-      await sleep(3500);
-      marker.setAnimation(null);
-    }
-  }
+        articleStr = response[1][0];
+        var url = 'http://en.wikipedia.org/wiki/' + articleStr;
+        document.getElementById('wiki-link').innerHTML = 'Wikipedia: <a href="' + url +
+          '" target="_blank">' + articleStr + '</a>';
 
+        clearTimeout(wikiRequestTimeout);
+      }
+    })
+      .fail(function () {
+        document.getElementById('wiki-link').innerHTML = 'Wikipedia Article Not Found';
+      });
+    await sleep(8000);
+    infowindow.close();
+  }
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// an async function 
+async function toggleBounce(marker) {
+  if (marker.getAnimation() !== null) {
+    marker.setAnimation(null);
+  } else {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+    await sleep(3500);
+    marker.setAnimation(null);
+  }
 }
 
 var Location = function(data) {
@@ -259,16 +264,50 @@ var Location = function(data) {
 var ViewModel = function() {
   var self = this;
 
+  this.searchQuery = ko.observable('');
+  this.categoryList = ko.observableArray(['History', 'Music & Arts', 'Sports', 'Food & Drink']);
+  this.selectLocationCategory = ko.observable();
+
   this.locationsList = ko.observableArray([]);
   locations.forEach(function (locationItem) {
     self.locationsList.push(new Location(locationItem));
   });
 
+  this.listBounce = async function (data) {
+    for (var i = 0; i < markers.length; i++) {
+      if (data.title() == markers[i].title) {
+        google.maps.event.trigger(markers[i], 'click');
+      }
+    }
+  };
+
+  this.filterLocations = ko.computed(function(){
+    var searchData = self.searchQuery().toLowerCase();
+    console.log(self.searchQuery());
+    return ko.utils.arrayFilter(self.locationsList(), function(location) {
+      if (self.selectLocationCategory()) {
+        for (var i = 0; i < markers.length; i++) {
+          if (self.selectLocationCategory() == markers[i].category) {
+            markers[i].setVisible(true);
+          } else {
+            markers[i].setVisible(false);
+          }
+        }
+        return location.category().indexOf(self.selectLocationCategory()) >= 0;
+      } else if (searchData != ' ') {
+        for (var i = 0; i < markers.length; i++) {
+          if (markers[i].title.toLowerCase().includes(searchData.toLowerCase())) {
+            console.log(markers[i].title);
+            markers[i].setVisible(true);
+          } else {
+            markers[i].setVisible(false);
+          }
+        }
+        return location.title().toLowerCase().indexOf(searchData) >= 0;
+      }
+    })
+  });
+
 }
 
 ko.applyBindings(new ViewModel());
-// $(document).ready(function () {
-//   ViewModel();
-//   initMap();
-//   ko.applyBindings(new ViewModel());
-// });
