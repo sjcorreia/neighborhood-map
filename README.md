@@ -11,6 +11,17 @@ The application also features a list of the POIs adjacent to the map, where the 
 
 The user can clone or download this [repositiory](https://github.com/sjcorreia/neighborhood-map) to their machine and open the `index.html` page in the browser of your choice.
 
+## Technical Specifications
+
+The following tools were used to build this application:
+
+* Knockout JS Framework version 3.4.2
+* Google Maps Javascript API version 3
+* Bootstrap 4.0.0
+* JQuery 3.3.1
+* Wikipedia API
+* OpenWeatherMap API
+
 ## Additional Resources
 
 The following links were helpful during the implementation of this project.
@@ -21,6 +32,7 @@ The following links were helpful during the implementation of this project.
 * Understanding [Javascript async await](https://ponyfoo.com/articles/understanding-javascript-async-await) behavior
 * [Homemade Apple Font](https://fonts.google.com/specimen/Homemade+Apple?selection.family=Homemade+Apple) from Google
 * [AJAX Query Documentation](http://api.jquery.com/jQuery.ajax/)
+* [Bootstrap Documentation](https://getbootstrap.com/docs/4.0/utilities/colors/)
 * JSFiddle: [Knockout Filter](http://jsfiddle.net/mythical/XJEzc/)
 * JSFiddle: [Knockout Select](http://jsfiddle.net/9wZFk/)
 * Stack Overflow: [Knockout Filter](https://stackoverflow.com/questions/29551997/knockout-search-filter)
