@@ -43,6 +43,7 @@ The following links were helpful during the implementation of this project.
 * Stack Overflow: [Trigger Google Maps Marker Click event](https://stackoverflow.com/questions/2730929/how-to-trigger-the-onclick-event-of-a-marker-on-a-google-maps-v3)
 * Stack Overflow: [Knockout Negative Logic in HTML](https://stackoverflow.com/questions/10114472/is-it-possible-to-data-bind-visible-to-the-negation-of-a-boolean-viewmodel)
 * Stack Overflow: [Responsive Google Map](https://stackoverflow.com/questions/15421369/responsive-google-map)
+* Stack Overflow: ["Mix Content Blocked" for AJAX request](https://stackoverflow.com/questions/33507566/mixed-content-blocked-when-running-an-http-ajax-operation-in-an-https-page)
 * YouTube: [AJAX Call for OpenWeatherMap API](https://www.youtube.com/watch?v=KT6Jaxl0JM4)
 * [Behavior Reference](https://github.com/AanyaP/Neighborhood-Map)
 * [HTML Color Codes](https://htmlcolorcodes.com/)
