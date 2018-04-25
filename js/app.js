@@ -214,7 +214,7 @@ function populateInfoWindow(marker, infowindow) {
     // Add content to the info window
     document.getElementById('marker-title').textContent = marker.title;
     // Add a link to wikipedia via ajax call
-    var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' +
+    var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' +
       marker.wiki_keyword + '&format=json&callback=wikiCallback';
     var wikiRequestTimeout = setTimeout(function () {
       document.getElementById('wiki-link').textContent = "Failed To Get Wikipedia Response";
