@@ -23,14 +23,13 @@
             </div>
             <div>
                 <span class="col-md-4">Filter by Category</span>
-                <select class="col-md-8" id="filter-search" data-bind="options: categoryList, optionsCaption: 'Select...', value: selectLocationCategory"></select>
+                <select class="col-md-8" id="filter-search" data-bind="options: categoryList, optionsCaption: 'All', value: selectLocationCategory"></select>
             </div>
             <div data-bind="template: {name: 'location', foreach: filterLocations}">
             </div>
             <script type="text/hmtl" id="location">
                 <a href="#" class="list-group-item text-dark" data-bind="text: title, click: $parent.listBounce"></a>
             </script>
-            <div></div>
         </div>
     </div>
 
