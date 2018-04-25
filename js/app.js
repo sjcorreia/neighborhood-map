@@ -169,7 +169,7 @@ function initMap() {
 // This function populates the infowindow when the marker is clicked. We'll only allow
 // one infowindow which will open at the marker that is clicked, and populate based
 // on that markers position.
-async function populateInfoWindow(marker, infowindow) {
+function populateInfoWindow(marker, infowindow) {
   // Check to make sure the infowindow is not already opened on this marker.
   if (infowindow.marker != marker) {
     // Clear the infowindow content to give the streetview time to load.
@@ -178,7 +178,7 @@ async function populateInfoWindow(marker, infowindow) {
     infowindow.addListener('closeclick', function () {
       infowindow.marker = null;
     });
-    infowindow.setContent('<div id="marker-title"></div></br><div id="pano"></div></br><div id="wiki-link"></div>');
+    infowindow.setContent('<div id="marker-title"></div></br><div id="pano"></div></br><div id="wiki-link"></div></br><div id="weather-info"></div>');
     var streetViewService = new google.maps.StreetViewService();
     var radius = 50;
     // In case the status is OK, which means the pano was found, compute the
@@ -207,7 +207,7 @@ async function populateInfoWindow(marker, infowindow) {
     streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
     // Open the infowindow on the correct marker.
     infowindow.open(map, marker);
-    map.setCenter(marker.position);
+    // Add content to the info window
     document.getElementById('marker-title').textContent = marker.title;
     // Add a link to wikipedia via ajax call
     var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' +
@@ -233,8 +233,27 @@ async function populateInfoWindow(marker, infowindow) {
       .fail(function () {
         document.getElementById('wiki-link').innerHTML = 'Wikipedia Article Not Found';
       });
-    await sleep(8000);
-    infowindow.close();
+    // Add weather requests
+    var openWeatherMapUrl = 'http://api.openweathermap.org/data/2.5/find?q=Boston&units=imperial&appid=3af67917eaa53a878f48a1cd51cbb094';
+    var weatherRequestTimeout = setTimeout(function () {
+      document.getElementById('weather-info').textContent = "Failed to get OpenWeather Info";
+    }, 8000);
+    $.ajax({
+      url: openWeatherMapUrl,
+      dataType: "jsonp",
+      jsonp: "callback",
+      success: function (response) {
+
+        document.getElementById('weather-info').innerHTML = 'Weather: ' +
+          response['list'][0]['main']['temp'] + "&deg;F " + response['list'][0]['weather'][0]['main'];
+
+        clearTimeout(weatherRequestTimeout);
+      }
+    })
+      .fail(function () {
+        document.getElementById('weather-info').innerHTML = "Weather Info Not Found";
+      });
+    
   }
 }
 
