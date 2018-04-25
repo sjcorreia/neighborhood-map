@@ -45,7 +45,8 @@ hr {
 }
 
 #query-bar {
-    max-width: 320px;
+    max-width: 250px;
+    left: 25px;
 }
 
 #pano {
@@ -78,12 +79,32 @@ hr {
     background-color: #9E4F18;
 }
 
+@media screen and (min-width: 350px) {
+
+    #query-bar {
+        max-width: 300px;
+        left: 25px;
+    }
+}
+
+@media screen and (min-width: 400px) {
+
+    #query-bar {
+        max-width: 340px;
+    }
+}
+
 @media screen and (min-width: 767px) {
     .options-box {
         top: 0px;
         padding: 10px 10px 30px 10px;
         line-height: 25px;
         width: 240px;
+    }
+
+    #query-bar {
+        max-width: 320px;
+        left: 5px;
     }
 }
 
