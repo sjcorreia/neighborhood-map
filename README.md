@@ -28,6 +28,7 @@ The following links were helpful during the implementation of this project.
 
 * [Knockout JS Framework](http://knockoutjs.com/)
 * [Google Maps API for Javascript](https://developers.google.com/maps/documentation/javascript/)
+* [Udacity GitHub Repository for Google Maps Course](https://github.com/udacity/ud864)
 * [OpenWeatherMap Current Weather API](https://openweathermap.org/current)
 * Understanding [Javascript async await](https://ponyfoo.com/articles/understanding-javascript-async-await) behavior
 * [Homemade Apple Font](https://fonts.google.com/specimen/Homemade+Apple?selection.family=Homemade+Apple) from Google
