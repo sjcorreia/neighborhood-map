@@ -227,7 +227,7 @@ function populateInfoWindow(marker, infowindow) {
       success: function (response) {
 
         articleStr = response[1][0];
-        var url = 'http://en.wikipedia.org/wiki/' + articleStr;
+        var url = 'https://en.wikipedia.org/wiki/' + articleStr;
         document.getElementById('wiki-link').innerHTML = 'Wikipedia: <a href="' + url +
           '" target="_blank">' + articleStr + '</a>';
 
@@ -238,7 +238,7 @@ function populateInfoWindow(marker, infowindow) {
         document.getElementById('wiki-link').innerHTML = 'Wikipedia Article Not Found';
       });
     // Add weather requests
-    var openWeatherMapUrl = 'http://api.openweathermap.org/data/2.5/find?q=Boston&units=imperial&appid=3af67917eaa53a878f48a1cd51cbb094';
+    var openWeatherMapUrl = 'https://api.openweathermap.org/data/2.5/find?q=Boston&units=imperial&appid=3af67917eaa53a878f48a1cd51cbb094';
     var weatherRequestTimeout = setTimeout(function () {
       document.getElementById('weather-info').textContent = "Failed to get OpenWeather Info";
     }, 8000);
