@@ -44,6 +44,7 @@ The following links were helpful during the implementation of this project.
 * Stack Overflow: [Responsive Google Map](https://stackoverflow.com/questions/15421369/responsive-google-map)
 * YouTube: [AJAX Call for OpenWeatherMap API](https://www.youtube.com/watch?v=KT6Jaxl0JM4)
 * [Behavior Reference](https://github.com/AanyaP/Neighborhood-Map)
+* [HTML Color Codes](https://htmlcolorcodes.com/)
 
 ## License
 
