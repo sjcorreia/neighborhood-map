@@ -1,3 +1,7 @@
+// Author: Steven Correia
+// github: sjcorreia
+// FSND Project: Neighborhood Map
+
 // Create a map variable
 var map;
 
