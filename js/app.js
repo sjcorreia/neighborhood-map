@@ -161,6 +161,10 @@ function initMap() {
       populateInfoWindow(this, largeInfowindow);
       toggleBounce(this);
     });
+    marker.addListener('dblclick', function () {
+      largeInfowindow.close();
+      largeInfowindow = new google.maps.InfoWindow();
+    });
     bounds.extend(markers[i].position);
   }
 
@@ -257,7 +261,10 @@ function populateInfoWindow(marker, infowindow) {
       .fail(function () {
         document.getElementById('weather-info').innerHTML = "Weather Info Not Found";
       });
-    
+
+    // await sleep(10000);
+    // infowindow.marker = null;
+    // infowindow.close();
   }
 }
 
@@ -306,10 +313,11 @@ var ViewModel = function() {
 
   this.filterLocations = ko.computed(function(){
     var searchData = self.searchQuery().toLowerCase();
-    console.log(self.searchQuery());
     return ko.utils.arrayFilter(self.locationsList(), function(location) {
       if (self.selectLocationCategory()) {
         for (var i = 0; i < markers.length; i++) {
+          // Hack to close any open infowindow
+          google.maps.event.trigger(markers[i], 'dblclick');
           if (self.selectLocationCategory() == markers[i].category) {
             markers[i].setVisible(true);
           } else {
@@ -319,8 +327,9 @@ var ViewModel = function() {
         return location.category().indexOf(self.selectLocationCategory()) >= 0;
       } else if (searchData != ' ') {
         for (var i = 0; i < markers.length; i++) {
+          // Hack to close any open infowindow
+          google.maps.event.trigger(markers[i], 'dblclick');
           if (markers[i].title.toLowerCase().includes(searchData.toLowerCase())) {
-            console.log(markers[i].title);
             markers[i].setVisible(true);
           } else {
             markers[i].setVisible(false);
