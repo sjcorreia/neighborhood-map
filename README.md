@@ -34,6 +34,7 @@ The following links were helpful during the implementation of this project.
 * [Homemade Apple Font](https://fonts.google.com/specimen/Homemade+Apple?selection.family=Homemade+Apple) from Google
 * [AJAX Query Documentation](http://api.jquery.com/jQuery.ajax/)
 * [Bootstrap Documentation](https://getbootstrap.com/docs/4.0/utilities/colors/)
+* Udacity Forum: [Handling Google Maps callback and error functions](https://discussions.udacity.com/t/handling-google-maps-in-async-and-fallback/34282)
 * JSFiddle: [Knockout Filter](http://jsfiddle.net/mythical/XJEzc/)
 * JSFiddle: [Knockout Select](http://jsfiddle.net/9wZFk/)
 * Stack Overflow: [Knockout Filter](https://stackoverflow.com/questions/29551997/knockout-search-filter)
