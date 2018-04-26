@@ -30,14 +30,22 @@ hr {
     height: 100%;
     width: 100%;
     position: absolute;
+    top: 420px;
     right: 0px;
+}
+
+#map-error {
+    font-size: 36px;
+    text-align: center;
+    color: #A04405;
 }
 
 .options-box {
     background: #C6BCB6;
-    top: 400px;
+    /* top: 400px; */
     border-radius: 3px;
-    height: 100%;
+    height: auto;
+    max-height: 400px;
     line-height: 15px;
     padding: 10px 10px 30px 10px;
     text-align: left;
@@ -106,11 +114,15 @@ hr {
         max-width: 320px;
         left: 5px;
     }
+
+    #map {
+        top: 0px;
+    }
 }
 
 @media screen and (min-width: 1024px) {
     .options-box {
-        height: 120px;
+        height: auto;
         top: 0px;
         padding: 10px 10px 30px 10px;
         line-height: 30px;
@@ -120,6 +132,10 @@ hr {
 
     h1 {
         font-size: 30px;
+    }
+
+    #map {
+        top: 0px;
     }
 
     #query-bar {
