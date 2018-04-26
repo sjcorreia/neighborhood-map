@@ -14,7 +14,9 @@
 
 <body>
     <div class="col-md-12 container">
-        <div class="col-md-9 map" id="map"></div>
+        <div class="col-md-9 map" id="map">
+            <div class="col-md-9 map-error" id="map-error"></div>
+        </div>
         <div class="col-md-3 options-box">
             <h1>Discover Boston</h1>
             <hr>
@@ -35,11 +37,11 @@
     </div>
 
     <!-- Load the JS API ASYNCHRONOUSLY below.-->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvCPqfXjiR4tN6uLopKJo3ykmkdN_ASz8&libraries=geometry&v=3&callback=initMap">
-    </script>
     <script src="js/lib/jquery-3.3.1.min.js"></script>
     <script src="js/lib/knockout-3.4.2.js"></script>
     <script src="js/app.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvCPqfXjiR4tN6uLopKJo3ykmkdN_ASz8&libraries=geometry&v=3&callback=initMap" onerror="mapError()">
+    </script>
 </body>
 
 </html>
