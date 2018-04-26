@@ -174,6 +174,12 @@ function initMap() {
 
 }
 
+// This function will be called in case there is an error and the Google API cannot load
+// the map.
+function mapError() {
+  document.getElementById('map-error').textContent = "Failed to Load Map - Please Reload the Page";
+}
+
 // This function populates the infowindow when the marker is clicked. We'll only allow
 // one infowindow which will open at the marker that is clicked, and populate based
 // on that markers position.
