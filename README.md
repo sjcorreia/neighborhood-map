@@ -11,7 +11,7 @@ The application also features a list of the POIs adjacent to the map, where the 
 
 The user can clone or download this [repositiory](https://github.com/sjcorreia/neighborhood-map) to their machine and open the `index.html` page in the browser of your choice.
 
-Alternatively, by using [GitHub Pages](https://pages.github.com/) this site can be seen [here](https://sjcorreia.github.io/neighborhood-map/index.html){target="_blank"}.
+Alternatively, by using [GitHub Pages](https://pages.github.com/) this site can be seen [here](https://sjcorreia.github.io/neighborhood-map/index.html).
 
 ## Technical Specifications
 
